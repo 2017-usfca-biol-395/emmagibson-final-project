@@ -190,6 +190,7 @@ phyloseq_obj <- phyloseq(otu_table(sequence_table_nochim,
                          sample_data(metadata_in), # metadata for each sample
                          tax_table(taxa)) # taxonomy for each sequence variant
                          #phy_tree(tree_in)) # phylogeny from sequence variants
-
+# save output
+save(phyloseq_obj, file = "output/phyloseq_obj.RData")
 
 
