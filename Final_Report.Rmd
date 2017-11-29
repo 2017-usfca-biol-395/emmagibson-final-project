@@ -31,13 +31,80 @@ These are the methods you used to do your bioinformatic analyses analyses. Shoul
 
 ## Subsections are ok in the results section too
 
-```{r your-code-here}
-# Add code chunks as needed for your analyses
-# For most analyses, I would recommend splitting the
-# intensive computational part into a seperate R script file
-# and then just load your libraries and the data object here
-# using the `load()` function. Ask me for clarification if this is
-# unclear.
+```{r load-libraries}
+# load general-use packages
+library("dplyr")
+library("tidyr")
+library("knitr")
+library("ggplot2")
+library("vegan")
+library("RColorBrewer")
+
+# this package allows for the easy inclusion of literature citations in our Rmd
+# more info here: https://github.com/crsh/citr
+# and here:
+# http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
+library("citr")
+
+# This to export a fasta of our final denoised sequence variants
+library("seqinr")
+
+# To install this you have to install from GitHub
+# See more info here: https://github.com/leffj/mctoolsr
+# run this -- install.packages("devtools")
+# and then this -- devtools::install_github("leffj/mctoolsr")
+library("mctoolsr")
+
+# And this to visualize our results
+# it also needs to be installed from bioconductor
+library("phyloseq")
+
+# load the output of the DADA2 script
+load("output/phyloseq_obj.RData")
+seq_table <- read.table("output/sequence_variants_table.txt",
+                        row.names = 1,
+                        header = TRUE)
+# Melt phyloseq object to make certain analysis easier
+melted_obj <- psmelt(phyloseq_obj)
+```
+
+
+```{r rarefaction}
+#format sequence table for vegan
+seq_table_tseq_table_t <- t(seq)
+# this code aggregates the data so that it is organized by phenotype
+aggregated_sequence_data <- aggregate(seq_table_t,
+                  by = list(Host_Phenotype = metadata_in$host_phenotype_s),
+                            FUN = sum)
+row.names(aggregated_sequence_data) <- aggregated_sequence_data$host_phenotype_s
+aggregated_sequence_data <- aggregated_sequence_data[
+  2:length(aggregated_sequence_data)]
+# this code makes the rarefactin curve
+rarecurve(aggregated_sequence_data,
+          main = "Species diversity in MS patients vs healthy individuals")
+```
+
+
+```{r example-phyloseq-plot-1}
+# this subset removes mouse data from the dataset
+plot_richness(phyloseq_obj,
+              x = "host_phenotype_s",
+              measures = c("Shannon")) +
+  xlab("Host Disease Status") +
+  geom_boxplot(aes(fill = host_phenotype_s),
+               width = 0.2) +
+  ggtitle("Alpha diversity in MS versus healthy patients")
+```
+
+```{r phylum-by-phenotype}
+# this code plots the abundance of each phylum present in each sex's hands
+plot_bar(phyloseq_obj,
+         x = "host_phenotype_s",
+         y = "Abundance",
+         fill = "Phylum") +
+  ggtitle("Abundance of all phyla in Patients of each Phenotype") +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1)) +
+  scale_fill_brewer(palette = "Paired")
 ```
 
 In addition to a minimum of 5-10 figures/tables (and associated captions), you should include sufficient text in this section to describe what your findings were. Remember that in the results section you just describe what you found, but you don't interpret it - that happens in the discussion. 2-3 pages.
