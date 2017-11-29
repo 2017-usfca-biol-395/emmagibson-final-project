@@ -74,7 +74,7 @@ plotQualityProfile(filenames_forward_reads[1:20])
 # faq.html#can-i-use-dada2-with-my-454-or-ion-torrent-data
 filtered_output <- filterAndTrim(fwd = filenames_forward_reads,
                                  filt = filtered_reads_path,
-                                 maxLen = 600,
+                                 maxLen = 700,
                                  minLen = 55,
                                  maxN = 0, # discard any seqs with Ns
                                  maxEE = 2, # allow w/ up to 3 expected errors
@@ -91,8 +91,8 @@ kable(filtered_output,
 # this build error models from each of the samples
 errors_forward_reads <- learnErrors(filtered_reads_path,
                                     multithread = FALSE,
-                                    nreads = 1000000)
-save(errors_forward_reads, file = "output/errors_forward_reads.RData")
+                                    nreads = 500000)
+save(errors_forward_reads, file = "output/errors_forward_reads-700maxbp.RData")
 # quick check to see if error models match data
 # (black lines match black points) and are generally decresing left to right
 plotErrors(errors_forward_reads,
@@ -110,7 +110,8 @@ dada_forward_reads <- dada(dereplicated_forward_reads,
                            err = errors_forward_reads,
                            HOMOPOLYMER_GAP_PENALTY = -1, # reduce penalty bc 454
                            BAND_SIZE = 32) # performs local alignments bc indels
-
+# save output
+save(dada_forward_reads, file = "output/dada_forward_reads.RData")
 # check dada results
 dada_forward_reads
 # produce the 'site by species matrix'
