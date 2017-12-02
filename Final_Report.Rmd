@@ -32,31 +32,16 @@ These are the methods you used to do your bioinformatic analyses analyses. Shoul
 ## Subsections are ok in the results section too
 
 ```{r load-libraries}
-# load general-use packages
+# load all necesary libraries
 library("dplyr")
 library("tidyr")
 library("knitr")
 library("ggplot2")
 library("vegan")
 library("RColorBrewer")
-
-# this package allows for the easy inclusion of literature citations in our Rmd
-# more info here: https://github.com/crsh/citr
-# and here:
-# http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
 library("citr")
-
-# This to export a fasta of our final denoised sequence variants
 library("seqinr")
-
-# To install this you have to install from GitHub
-# See more info here: https://github.com/leffj/mctoolsr
-# run this -- install.packages("devtools")
-# and then this -- devtools::install_github("leffj/mctoolsr")
 library("mctoolsr")
-
-# And this to visualize our results
-# it also needs to be installed from bioconductor
 library("phyloseq")
 
 # load the output of the DADA2 script
@@ -71,12 +56,12 @@ melted_obj <- psmelt(phyloseq_obj)
 
 ```{r rarefaction}
 #format sequence table for vegan
-seq_table_tseq_table_t <- t(seq)
+seq_table_t <- t(seq_table)
 # this code aggregates the data so that it is organized by phenotype
 aggregated_sequence_data <- aggregate(seq_table_t,
                   by = list(Host_Phenotype = metadata_in$host_phenotype_s),
                             FUN = sum)
-row.names(aggregated_sequence_data) <- aggregated_sequence_data$host_phenotype_s
+row.names(aggregated_sequence_data) <- aggregated_sequence_data$Host_Phenotype
 aggregated_sequence_data <- aggregated_sequence_data[
   2:length(aggregated_sequence_data)]
 # this code makes the rarefactin curve
@@ -85,7 +70,7 @@ rarecurve(aggregated_sequence_data,
 ```
 
 
-```{r example-phyloseq-plot-1}
+```{r overall-diversity}
 # this subset removes mouse data from the dataset
 plot_richness(phyloseq_obj,
               x = "host_phenotype_s",
@@ -98,15 +83,159 @@ plot_richness(phyloseq_obj,
 
 ```{r phylum-by-phenotype}
 # this code plots the abundance of each phylum present in each sex's hands
-plot_bar(phyloseq_obj,
-         x = "host_phenotype_s",
-         y = "Abundance",
-         fill = "Phylum") +
-  ggtitle("Abundance of all phyla in Patients of each Phenotype") +
-  theme(axis.text.x = element_text(angle = 0, hjust = 1)) +
-  scale_fill_brewer(palette = "Paired")
+phylum_totals <- melted_obj %>%
+  filter(!is.na(Phylum)) %>%
+  group_by(Phylum, host_phenotype_s) %>%
+  tally() %>%
+  spread(key = host_phenotype_s,
+         value = n) %>%
+  arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
+          desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+kable(phylum_totals)
 ```
 
+```{r patient-numbers}
+melted_obj %>%
+  group_by(host_phenotype_s) %>%
+  summarise(number_of_patients = n_distinct(isolate_s))
+```
+
+```{r phylum_graph}
+# this makes a stacked bar plot with phylum relative abundances
+# for each type of patient
+melted_obj %>%
+  filter(!is.na(Phylum)) %>%
+  group_by(host_phenotype_s, Phylum) %>%
+  summarize(mean_abund = mean(Abundance)) %>%
+  ggplot(aes(x = host_phenotype_s,
+             y = mean_abund,
+             fill = Phylum)) +
+    geom_col(position = "fill",
+             color = "black") +
+  #scale_x_discrete(labels = c("a", "b", "c", "d")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+melted_obj %>%
+  filter(!is.na(Phylum)) %>%
+  group_by(host_phenotype_s, Phylum) %>%
+  summarize(sd_abund = sd(Abundance)) %>%
+  ggplot(aes(x = host_phenotype_s,
+             y = sd_abund,
+             fill = Phylum)) +
+    geom_col(position = "fill",
+             color = "black") +
+  #scale_x_discrete(labels = c("a", "b", "c", "d")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r phylogeny}
+#this code displays the phylogenetic tree from 
+plot_tree(phyloseq_obj,
+          color = "host_phenotype_s",
+          ladderize = TRUE) +
+# the last line arranges the tree branches from short to long
+  ggtitle("A. Phylogenetic tree colored by host ID")
+# you can use prune_taxa to look at trees for certain taxa
+```
+
+```{r fir-common-classes}
+firm_classes <- melted_obj %>%
+  filter(Phylum == "Firmicutes") %>%
+  filter(!is.na(Class)) %>%
+  group_by(host_phenotype_s, Class, Order, Family) %>%
+  tally() %>%
+  spread(key = host_phenotype_s,
+         value = n) %>%
+  arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
+          desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+kable(firm_classes)
+```
+
+```{r fir-diversity}
+
+fir_subset <- subset_taxa(phyloseq_obj, Phylum == "Firmicutes")
+# this subset removes mouse data from the dataset
+plot_richness(fir_subset,
+              x = "host_phenotype_s",
+              measures = c("Shannon")) +
+  xlab("Host Disease Status") +
+  geom_boxplot(aes(fill = host_phenotype_s),
+               width = 0.2) +
+  ggtitle("Alpha diversity  of Firmicutes in MS versus healthy patients")
+```
+
+```{r phylogeny_fir}
+
+plot_tree(ver_subset,
+     color = "host_phenotype_s")
+
+```
+
+```{r cy-common-classes}
+cy_class <- melted_obj %>%
+  filter(Phylum == "Cyanobacteria/Chloroplast") %>%
+  group_by(host_phenotype_s, Class) %>%
+  tally() %>%
+  spread(key = host_phenotype_s,
+         value = n) %>%
+  arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
+          desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+kable(cy_class)
+
+```
+
+```{r cy-diversity}
+
+cy_subset <- subset_taxa(phyloseq_obj, Phylum == "Cyanobacteria/Chloroplast")
+# this subset removes mouse data from the dataset
+plot_richness(cy_subset,
+              x = "host_phenotype_s",
+              measures = c("Shannon")) +
+  xlab("Host Disease Status") +
+  geom_boxplot(aes(fill = host_phenotype_s),
+               width = 0.2) +
+  ggtitle("Alpha diversity of Cyanobacteria in MS versus healthy patients")
+```
+
+```{r phylogeny_cy}
+
+plot_tree(cy_subset,
+     color = "host_phenotype_s")
+
+```
+
+```{r ver-common-classes}
+ver_classes <- melted_obj %>%
+  filter(Phylum == "Verrucomicrobia") %>%
+  group_by(host_phenotype_s, Class, Order, Family, Genus) %>%
+  tally() %>%
+  spread(key = host_phenotype_s,
+         value = n) %>%
+  arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
+          desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+kable(ver_classes)
+
+```
+
+```{r cy-diversity}
+
+ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
+# this subset removes mouse data from the dataset
+plot_richness(ver_subset,
+              x = "host_phenotype_s",
+              measures = c("Shannon")) +
+  xlab("Host Disease Status") +
+  geom_boxplot(aes(fill = host_phenotype_s),
+               width = 0.2) +
+  ggtitle("Alpha diversity of Verrucomicrobia in MS versus healthy patients")
+```
+
+```{r phylogeny_ver}
+
+plot_tree(ver_subset,
+     color = "host_phenotype_s")
+
+```
 In addition to a minimum of 5-10 figures/tables (and associated captions), you should include sufficient text in this section to describe what your findings were. Remember that in the results section you just describe what you found, but you don't interpret it - that happens in the discussion. 2-3 pages.
 
 # Discussion
