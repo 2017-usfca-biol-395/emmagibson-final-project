@@ -172,15 +172,22 @@ plot_richness(fir_subset,
   ggtitle("Alpha diversity  of Firmicutes in MS versus healthy patients")
 ```
 
+**Figure 4.** Shannon diversty in Firmicutes bacteria
+This figure shows the Shannon diversity in all bacteria within the Firmicutes phylum for patients of all disease statuses.
+
 ```{r phylogeny_fir}
 
 plot_tree(fir_subset,
      color = "host_phenotype_s")
 
 ```
+**Figure 5.** Phylogenetic tree of Firmicutes bacteria
+This figure shows a phylogenetic tree of all sequences in the Firmicutes phylum, with tips colored by patient disease status.
 
 ##Cyanobacteria Community Analysis
 
+**Table 4.** Common class in Cyanobacteria
+This table shows that the only class in the Cyanobacteria phylum for MS patients of all disease statuses is Chloroplast.
 ```{r cy-common-classes}
 cy_class <- melted_obj %>%
   filter(Phylum == "Cyanobacteria/Chloroplast") %>%
@@ -206,6 +213,8 @@ plot_richness(cy_subset,
                width = 0.2) +
   ggtitle("Alpha diversity of Cyanobacteria in MS versus healthy patients")
 ```
+**Figure 6.** Shannon diversty in Cyanobacteria
+This figure shows the Shannon diversity in all bacteria within the Cyanobacteria phylum for patients of all disease statuses.
 
 ```{r phylogeny_cy}
 
@@ -213,9 +222,13 @@ plot_tree(cy_subset,
      color = "host_phenotype_s")
 
 ```
+**Figure 7.** Phylogenetic tree of Cyanobacteria
+This figure shows a phylogenetic tree of all sequences in the Cyanobacteria phylum, with tips colored by patient disease status.
 
 ##Verrucomicrobia Phylum Analysis
 
+**Table 5.** Common class, order, family, and genus in Verrucomicrobia bacteria
+This table shows that all bacteria in the Verrucomicrobia phylum belong to the same class, order, family, and genus for MS patients of all disease statuses.
 ```{r ver-common-classes}
 ver_classes <- melted_obj %>%
   filter(Phylum == "Verrucomicrobia") %>%
@@ -229,7 +242,7 @@ kable(ver_classes)
 
 ```
 
-```{r cy-phylogeny}
+```{r ver-diversity}
 
 ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
 # this subset removes mouse data from the dataset
@@ -241,6 +254,8 @@ plot_richness(ver_subset,
                width = 0.2) +
   ggtitle("Alpha diversity of Verrucomicrobia in MS versus healthy patients")
 ```
+**Figure 8.** Shannon diversty in Verrucomicrobia bacteria
+This figure shows the Shannon diversity in all bacteria within the Verrucomicrobia phylum for patients of all disease statuses.
 
 ```{r phylogeny_ver}
 
@@ -248,7 +263,8 @@ plot_tree(ver_subset,
      color = "host_phenotype_s")
 
 ```
-In addition to a minimum of 5-10 figures/tables (and associated captions), you should include sufficient text in this section to describe what your findings were. Remember that in the results section you just describe what you found, but you don't interpret it - that happens in the discussion. 2-3 pages.
+**Figure 9.** Phylogenetic tree of Verrucomicrobia
+This figure shows a phylogenetic tree of all sequences in the Verrucomicrobia phylum, with tips colored by patient disease status.
 
 # Discussion
 
