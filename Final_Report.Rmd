@@ -49,25 +49,17 @@ load("output/phyloseq_obj.RData")
 seq_table <- read.table("output/sequence_variants_table.txt",
                         row.names = 1,
                         header = TRUE)
+metadata_in <- read.table(paste0("data/metadata/",
+                                 "SraRunTable.txt"),
+                          sep = "\t",
+                          header = TRUE,
+                          stringsAsFactors = FALSE,
+                          row.names = 13)
 # Melt phyloseq object to make certain analysis easier
 melted_obj <- psmelt(phyloseq_obj)
 ```
 
 
-```{r rarefaction}
-#format sequence table for vegan
-seq_table_t <- t(seq_table)
-# this code aggregates the data so that it is organized by phenotype
-aggregated_sequence_data <- aggregate(seq_table_t,
-                  by = list(Host_Phenotype = metadata_in$host_phenotype_s),
-                            FUN = sum)
-row.names(aggregated_sequence_data) <- aggregated_sequence_data$Host_Phenotype
-aggregated_sequence_data <- aggregated_sequence_data[
-  2:length(aggregated_sequence_data)]
-# this code makes the rarefactin curve
-rarecurve(aggregated_sequence_data,
-          main = "Species diversity in MS patients vs healthy individuals")
-```
 
 
 ```{r overall-diversity}
@@ -166,7 +158,7 @@ plot_richness(fir_subset,
 
 ```{r phylogeny_fir}
 
-plot_tree(ver_subset,
+plot_tree(fir_subset,
      color = "host_phenotype_s")
 
 ```
@@ -217,7 +209,7 @@ kable(ver_classes)
 
 ```
 
-```{r cy-diversity}
+```{r cy-phylogeny}
 
 ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
 # this subset removes mouse data from the dataset
