@@ -47,11 +47,14 @@ metadata_in <- read.table(paste0("data/metadata/",
 
 # some of the metadata contains typos, so I fix them here
 metadata_in$host_phenotype_s[
-  metadata_in$host_phenotype_s == "Multiple_Sclerosis_untreated"] <- "Multiple_Sclerosis_Untreated"
+  metadata_in$host_phenotype_s == "Multiple_Sclerosis_untreated"
+  ] <- "Multiple_Sclerosis_Untreated"
 metadata_in$host_phenotype_s[
-  metadata_in$host_phenotype_s == "Multiple_Sclerosis_- copaxone"] <- "Multiple_Sclerosis_Copaxone"
+  metadata_in$host_phenotype_s == "Multiple_Sclerosis_- copaxone"
+  ] <- "Multiple_Sclerosis_Copaxone"
 metadata_in$host_phenotype_s[
-  metadata_in$host_phenotype_s == "Healthy Control"] <- "Healthy_Control"
+  metadata_in$host_phenotype_s == "Healthy Control"
+  ] <- "Healthy_Control"
 
 # make a subset of 454 sample file names
 metadata_in <- subset(metadata_in, metadata_in$LibraryLayout_s == "SINGLE")
