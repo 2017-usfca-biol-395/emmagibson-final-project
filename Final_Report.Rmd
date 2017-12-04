@@ -17,11 +17,11 @@ Add about 2-3 pages here. Across the whole manuscript, you should cite at least 
 
 ## Study design
 
-Add about half a page here. In this section instead of first person (I/we), use the authors of the paper you selected, since you'll just be describing what they did, based on the methods in their paper.
+The original study by Jangi *et al.* sampled the gut microbiome of 103 individuals, 60 multiple sclerosis (MS) patients and 43 healthy controls. [@jangi2016alterations] there were three variations of MS patients: those with untreated MS, those recieving treatment from beta-interferon, and those recieving treatment with glatiramer acetate. Both groups that had been recieving tratment had been doing so for at least 6 months. Both MS and control patients had no antibiotic use in the last 6 months, no probiotic use,  no corticosteroids, np history of gastroenteritis, no irritable bowel syndrome, no bowel surgery, no bowel disease, no other autoimmune disease, were not pregnant, and had not traveled outside the country in the past month. All patients were also given a dietary survey before the collection of samples. 
 
 ## Sample origin and sequencing
 
-Add about half a page here. In this section instead of first person (I/we), use the authors of the paper you selected, since you'll just be describing what they did, based on the methods in their paper.
+To obtain microbiome data, Jangi *et al.* used stool samples that were collected by the patients and shipped to the laboratory overnight a 0 degrees Celcius. [@jangi2016alterations] Upon recieving the smples, they were stored at -80 degrees Celcius until DNA extaction, and were only subjected to one freeze-thaw cycle. They obtained sequence data from the fecal microbes using both pyrosequencing and Illumina sequencing of the 16S rRNA gene. 
 
 ## Computational
 
