@@ -59,9 +59,6 @@ metadata_in <- read.table(paste0("data/metadata/",
 melted_obj <- psmelt(phyloseq_obj)
 ```
 
-
-
-
 ```{r overall-diversity}
 # this subset removes mouse data from the dataset
 plot_richness(phyloseq_obj,
