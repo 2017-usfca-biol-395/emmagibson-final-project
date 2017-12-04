@@ -287,7 +287,6 @@ This figure shows the Shannon diversity in all bacteria within the Verrucomicrob
 
 plot_tree(ver_subset,
      color = "host_phenotype_s")
-
 ```
 
 **Figure 9.** Phylogenetic tree of Verrucomicrobia
