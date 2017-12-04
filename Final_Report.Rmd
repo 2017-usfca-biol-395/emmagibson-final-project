@@ -31,8 +31,6 @@ DADA2 was used for inter-sequence analysis and cleaning, such as forming OTUs an
 
 # Results
 
-## Subsections are ok in the results section too
-
 ```{r load-libraries}
 # load all necesary libraries
 library("dplyr")
@@ -73,7 +71,11 @@ plot_richness(phyloseq_obj,
                width = 0.2) +
   ggtitle("Alpha diversity in MS versus healthy patients")
 ```
+**Figure 1.** Alpha diversity in patients by disease status
+This figure shows Shannon diversity in healthy control patients and MS patients receiving each type of treatment.
 
+**Table 1.** Phylum abindance in each 
+This table shows the abundance of each phylum in healthy patients and MS patients of each treatment type.
 ```{r phylum-by-phenotype}
 # this code plots the abundance of each phylum present in each sex's hands
 phylum_totals <- melted_obj %>%
@@ -87,7 +89,10 @@ phylum_totals <- melted_obj %>%
 kable(phylum_totals)
 ```
 
+**Table 2.** Number of patients of each treatment type
+This table shows the number of patients in each treatment group. Each MS group is smaller on its own than the control group, and the different treatment groups are smaller than the untreated group.
 ```{r patient-numbers}
+
 melted_obj %>%
   group_by(host_phenotype_s) %>%
   summarise(number_of_patients = n_distinct(isolate_s))
@@ -106,7 +111,8 @@ melted_obj %>%
     geom_col(position = "fill",
              color = "black") +
   #scale_x_discrete(labels = c("a", "b", "c", "d")) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("A")
 
 melted_obj %>%
   filter(!is.na(Phylum)) %>%
@@ -118,8 +124,11 @@ melted_obj %>%
     geom_col(position = "fill",
              color = "black") +
   #scale_x_discrete(labels = c("a", "b", "c", "d")) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("B")
 ```
+**Figure 2.** Normalized abundances of each phylum
+This figure shows the normalized abundances of each phylum in each treatment group (A), and their respective standard deviations (B)
 
 ```{r phylogeny}
 #this code displays the phylogenetic tree from 
@@ -130,9 +139,13 @@ plot_tree(phyloseq_obj,
   ggtitle("A. Phylogenetic tree colored by host ID")
 # you can use prune_taxa to look at trees for certain taxa
 ```
+**Figure 3.** Phylogenetic tree colored by patient disease status
+This figure shows a phylogenetic tree of all sequences in the dataset, with tips colored by patient disease status.
 
 ##Firmicutes Phylum Analysis
 
+**Table 3.** Common classes, orders, and families in Firmicutes bacteria
+This table shows the abundances of each class, order, and family within the Firmicutes phylum for MS patient sof all disease statuses.
 ```{r fir-common-classes}
 firm_classes <- melted_obj %>%
   filter(Phylum == "Firmicutes") %>%
