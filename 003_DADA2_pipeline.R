@@ -47,6 +47,10 @@ metadata_in <- read.table(paste0("data/metadata/",
                           stringsAsFactors = FALSE,
                           row.names = 13) # sets sample IDs to row names
 
+# some of the metadata contains typos, so I fix them here
+metadata_in$host_phenotype_s[metadata_in$host_phenotype_s == "Multiple_Sclerosis_untreated"] <- "Multiple_Sclerosis_Untreated"
+metadata_in$host_phenotype_s[metadata_in$host_phenotype_s == "Multiple_Sclerosis_- copaxone"] <- "Multiple_Sclerosis_Copaxone"
+metadata_in$host_phenotype_s[metadata_in$host_phenotype_s == "Healthy Control"] <- "Healthy_Control"
 
 # make a subset of 454 sample file names
 metadata_in <- subset(metadata_in, metadata_in$LibraryLayout_s == "SINGLE")
@@ -182,15 +186,15 @@ export_taxa_table_and_seqs(sequence_table_nochim,
 # read in the phylogeny, which was created from the fasta exported above
 # in Geneious by aligning the sequences with MAFFT and then building a
 # Maximum-Likelihood tree with RAxML
-# tree_in <- read_tree("output/sequence_variants_MAFFT_RAxML.newick")
+tree_in <- read_tree("output/sequence_variants_seqs-alignment_fast-tree.newick")
 
 # Construct phyloseq object (straightforward from dada2 outputs)
 phyloseq_obj <- phyloseq(otu_table(sequence_table_nochim,
                                    taxa_are_rows = FALSE), # sample-spp matrix
                          sample_data(metadata_in), # metadata for each sample
-                         tax_table(taxa)) # taxonomy for each sequence variant
-                         #phy_tree(tree_in)) # phylogeny from sequence variants
+                         tax_table(taxa), # taxonomy for each sequence variant
+                         phy_tree(tree_in)) # phylogeny from sequence variants
+# melt phyloseq object
+melted_obj <- psmelt(phyloseq_obj)
 # save output
 save(phyloseq_obj, file = "output/phyloseq_obj.RData")
-
-

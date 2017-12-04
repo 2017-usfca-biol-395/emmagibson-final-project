@@ -25,7 +25,9 @@ Add about half a page here. In this section instead of first person (I/we), use 
 
 ## Computational
 
-These are the methods you used to do your bioinformatic analyses analyses. Should probably be between 0.5 and 1 pages. At a very minimum should include citations for DADA2 and phyloseq if you are doing an amplicon study, or other citations as appropriate.
+I processed and analyzed the sequence data using a combination of bash and R. First, I used bash to download and process the samples in order to determine their length and quality. For this analysis, I only used the pyrosequencing-derived sequences from the original study. Sequences of sufficient quality were then analyzed in R, using all of the relevant metadata and sequence information. R analyses were conducted through the usage of base R, as well as DADA2 and phyloseq. I made some additional analysis by exporting the fasta files derived from DADA2 into Geneious. [@geneious] There, I used the FastTree plugin to constrict the phylogenetic tree that went into the phyloseq object. [@fasttree] Phyloseq was used to add various microbiome-specific functions to ggplot in order to better visualize the data [@mcmurdie2013].
+
+DADA2 was used for inter-sequence analysis and cleaning, such as forming OTUs and resolving minor sequence differences. The DADA2 pipeline begins with filtering paired fastq files by trimming them to a specific length and removing sequences that are too short, then further filtering based on number of expected errors, quality score, and number of ambiguous bases [@callahan2016]. Next, it can remove chimeras, which are sequences that are mare up of two parent sequences that result from sequencing errors. Lastly, it merges paired forward and reverse reads after all the sequences have been cleaned and de-noised, so that DADA2 can be extremely strict and require exact overlap.
 
 # Results
 
@@ -58,6 +60,8 @@ metadata_in <- read.table(paste0("data/metadata/",
 # Melt phyloseq object to make certain analysis easier
 melted_obj <- psmelt(phyloseq_obj)
 ```
+
+##Ovelall Community Analysis
 
 ```{r overall-diversity}
 # this subset removes mouse data from the dataset
@@ -127,6 +131,8 @@ plot_tree(phyloseq_obj,
 # you can use prune_taxa to look at trees for certain taxa
 ```
 
+##Firmicutes Phylum Analysis
+
 ```{r fir-common-classes}
 firm_classes <- melted_obj %>%
   filter(Phylum == "Firmicutes") %>%
@@ -160,6 +166,8 @@ plot_tree(fir_subset,
 
 ```
 
+##Cyanobacteria Community Analysis
+
 ```{r cy-common-classes}
 cy_class <- melted_obj %>%
   filter(Phylum == "Cyanobacteria/Chloroplast") %>%
@@ -192,6 +200,8 @@ plot_tree(cy_subset,
      color = "host_phenotype_s")
 
 ```
+
+##Verrucomicrobia Phylum Analysis
 
 ```{r ver-common-classes}
 ver_classes <- melted_obj %>%
