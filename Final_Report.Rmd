@@ -1,5 +1,5 @@
 ---
-title: "Final Report: Your Title Here"
+title: "Final Report: The Human Gut Microbiome in Multiple Sclerosis Patients Recieving Various Treatments"
 author: "Emma Gibson"
 date: "December 15, 2017"
 output:
