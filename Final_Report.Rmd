@@ -79,11 +79,11 @@ plot_richness(phyloseq_obj,
 
 **Figure 1.** Alpha diversity in patients by disease status
 
-This figure shows Shannon diversity in healthy control patients and multiple sclerosis patients receiving each type of treatment.
+This figure shows Shannon diversity in healthy control patients and multiple sclerosis patients receiving each type of treatment. Diversity is relatively similar in all smaples regaurdless of multiple sclerosis status or treatment status. However, the multiple sclerosis groups consistently show a slight increase in diversity, especially in the Copaxone group.
 
 **Table 1.** Phylum abindance in each 
 
-This table shows the abundance of each phylum in healthy patients and multiple sclerosis patients of each treatment type.
+This table shows the abundance of each phylum in healthy patients and multiple sclerosis patients of each treatment type. Although the numbers are hard to compare between groups because the groups are of different sizes, there are consistencies in which bacterial phylums are the most and least common.
 ```{r phylum-by-phenotype}
 # this code gets the abundance of each phylum present in each patient type
 phylum_totals <- melted_obj %>%
@@ -139,7 +139,7 @@ melted_obj %>%
 
 **Figure 2.** Normalized abundances of each phylum
 
-This figure shows the normalized abundances of each phylum in each treatment group (A), and their respective standard deviations (B)
+This figure shows the normalized abundances of each phylum in each treatment group (A), and their respective standard deviations (B). Although there are several groups of bacteria that retain consistent relative abundance across all patient types, the Interferon-treated multiple sclerosis shows some major differences. Most notably, it contains considerably more Cyanobacteria and less Verrucomicrobia than the other patient groups.
 
 ```{r phylogeny}
 # this code displays the phylogenetic tree from
@@ -154,13 +154,13 @@ plot_tree(phyloseq_obj,
 
 **Figure 3.** Phylogenetic tree colored by patient disease status
 
-This figure shows a phylogenetic tree of all sequences in the dataset, with tips colored by patient disease status.
+This figure shows a phylogenetic tree of all sequences in the dataset, with tips colored by patient disease status. At such a high resolution, there are no clear patterns or clades that emerge containing patients of one treatment status or another.
 
 ##Firmicutes Phylum Analysis
 
 **Table 3.** Common classes in Firmicutes bacteria
 
-This table shows the abundances of each class within the Firmicutes phylum for multiple sclerosis patient sof all disease statuses.
+This table shows the abundances of each class within the Firmicutes phylum for multiple sclerosis patient sof all disease statuses. There is a considerable variety of classes within this phylum, but once again, the actual abundance numbers are skewed by their respective sample size.
 ```{r fir-common-classes}
 # this subsets the bacteria in the Firmicutes phylum
 # and finds the subsequent classes
@@ -192,17 +192,18 @@ plot_richness(fir_subset,
 
 **Figure 4.** Shannon diversty in Firmicutes bacteria
 
-This figure shows the Shannon diversity in all bacteria within the Firmicutes phylum for patients of all disease statuses.
+This figure shows the Shannon diversity in all bacteria within the Firmicutes phylum for patients of all disease statuses. The diversity patterns within this phylum more or less reflect the diversity of the overall data.
 
 ```{r phylogeny_fir}
 # this makes a phylogenetic tree of the Firmicutes subset
 plot_tree(fir_subset,
-     color = "host_phenotype_s")
+     color = "host_phenotype_s") +
+  ggtitle("Phylogenetic tree colored by host disease type")
 ```
 
 **Figure 5.** Phylogenetic tree of Firmicutes bacteria
 
-This figure shows a phylogenetic tree of all sequences in the Firmicutes phylum, with tips colored by patient disease status.
+This figure shows a phylogenetic tree of all sequences in the Firmicutes phylum, with tips colored by patient disease status. While there are several prominent clades, there are no clear patterns where one clade contains predominantly patients of a certain treatment or disease status.
 
 ##Cyanobacteria Community Analysis
 
@@ -239,17 +240,18 @@ plot_richness(cy_subset,
 
 **Figure 6.** Shannon diversty in Cyanobacteria
 
-This figure shows the Shannon diversity in all bacteria within the Cyanobacteria phylum for patients of all disease statuses.
+This figure shows the Shannon diversity in all bacteria within the Cyanobacteria phylum for patients of all disease statuses. There is almost no diversity in any of the samples, which is reflected in Table 4, that shows there is only one class within this phylum.
 
 ```{r phylogeny_cy}
 # This makes a phylogenetic tree of Cyanobacteria
 plot_tree(cy_subset,
-     color = "host_phenotype_s")
+     color = "host_phenotype_s") +
+  ggtitle("Phylogenetic tree colored by host disease type")
 ```
 
 **Figure 7.** Phylogenetic tree of Cyanobacteria
 
-This figure shows a phylogenetic tree of all sequences in the Cyanobacteria phylum, with tips colored by patient disease status.
+This figure shows a phylogenetic tree of all sequences in the Cyanobacteria phylum, with tips colored by patient disease status. There are two major well-supported clades, one that contains primarily Cyanobacteria from healthy patients, and one that contains exclusively multiple sclerosis patients.
 
 ##Verrucomicrobia Phylum Analysis
 
@@ -286,31 +288,35 @@ plot_richness(ver_subset,
 
 **Figure 8.** Shannon diversty in Verrucomicrobia bacteria
 
-This figure shows the Shannon diversity in all bacteria within the Verrucomicrobia phylum for patients of all disease statuses.
+This figure shows the Shannon diversity in all bacteria within the Verrucomicrobia phylum for patients of all disease statuses. There is almost no diversity in any of the samples, which is reflected in Table 5, that shows all of the bacteria in this phylum belongs to the same class, order, family, and genus.
 
 ```{r phylogeny_ver}
 # this makes a phylogenetic tree of bacteria in Verrucomicrobia
 plot_tree(ver_subset,
-     color = "host_phenotype_s")
+     color = "host_phenotype_s") +
+  ggtitle("Phylogenetic tree colored by host disease type")
 ```
 
 **Figure 9.** Phylogenetic tree of Verrucomicrobia
 
-This figure shows a phylogenetic tree of all sequences in the Verrucomicrobia phylum, with tips colored by patient disease status.
+This figure shows a phylogenetic tree of all sequences in the Verrucomicrobia phylum, with tips colored by patient disease status. All of the tips are very short, indicatin that there are no prominent clades within this phylum.
 
 # Discussion
 
-The differences in overall diversity between multiple sclerosis patients and the healthy controls were somewhat neglidgeable, althought all multiple sclerosis groups showed slightly higher diversity than the control patients. (Figure 1) 
+The differences in overall diversity between multiple sclerosis patients and the healthy controls were somewhat neglidgeable, althought all multiple sclerosis groups showed slightly higher diversity than the control patients. (Figure 1) The reason for this increased diversity is unclear based on my analysis, so further stuy would be needed to investigate this completely. One possible explanation could be that multiple sclerosis is cause by the presence of harmful bacteria, rather than the absence of beneficial ones. However, the correlation is not strong enough to draw any significant conclusions from.
+When looking at the overall abundance of each phylum in the patients, it is important to remember that the various sample sizes will influence the overall sum abundance. (Table 2) Keeping hat in mind, it is still apparent that the most common bacteria in multiple sclerosis patients are the same as those in healthy patients, such as the Firmicutes and Bacteriobetes phylums. GIven that these are generally considered the most common phylums in the human gut, this is not suprising. [@turnbaugh2009core]
+That said, there did appear to be significant differences in community composition between the control patients, as well as between patients recieving different treatment types. (Figure 2 A) Most notably, patients recieving Interferon treatment for their multiple sclerosis have a lower abundance of Verrucomicrobia and a higher abundance of Cyanobacteria. (Figure 2 A) This abundance of Cyanobacteria is particularly strange, because according to phyloseq, the Cyanobacteria in question all belong to the Chloroplast class. This raises the question of what chloroplasts were doing in the dark environment of the human intestine, and why Interferon apparently raised their abundance. This increased abundance is likely not an accident due to an outlier, because the standard deviation for Cyanobacteria abundance in Interferon patients is relatively similar to that of similarly abundant phylums. (Figure 2 B)
+Althougth he phylogenetic tree of the overall microbiome data shows numerous clades but no correlation between disease status and phylogeny, it is too large to draw any detained conclusions from. (Figure 3)
 
 The first phylum I looked at in-depth was Firmicutes, because it had the highest abundance in control and all multiple sclerosis patients. (Table 1) Although there are many different species within this phylum present in the patients, there is no particular class, order, or family that is absent or present in one group of patients. (Table 3) This indicates that either the difference in Firmicutes microbiome content between multiple sclerosis and healthy patients is only apparent on the genus or species level, or there is no major difference for this phylum in multiple sclerosis patient's gut microbiomes. Based on my further analysis, I suspect that it is the latter, and the gut microbiome associated with multiple sclerosis is not determined by variiation within the Firmicutes  class.
 In order to reach this conclusion, the next analysis I did was to find the Shannon diversity within the Firmicutes phylum. The analysis showed that the Shannon diversity within this phylum more or less mimicked the overall diversity for each patient type. (Figure 4) This makes sense, given that Firmicutes is the most common phylum and therefore likely accounts for most of the diversity in each patient type. 
 The last analysis I used to determine this conclusion was the phylogenetic tree of only bacterium in the Firmicutes phylum. While there are several distinct clades in this phylogegetic tree, all of them appear to contain samples from patients in each disease type. (Figure 5) Given that Firmicutes is one of the most abundant phylums in the human gut, these findings seem to indicate that the Firmicutes bacteria present in multiple sclerosis patients' guts play the same basic role as those in a healthy person's gut. [@turnbaugh2009core] Therefore, it is likely that the bacteria that influence multiple sclerosis belong to another phylum. 
 
-The last phylum I looked at was Verrucomicrobia, because it was very abundant in every patient group except for the Interferon-treated multiple sclerosis patients. (Figure 2 A) Just like Cyanobacteria, there is sigificantly lower Shannon diversity in Verrucomicrobia in patients of every sample, which makse sense because it is also less common. (Figure 8) However, unlike Cyanobacteria, there does not appear to be a significant phylogenetic difference between Verrucomicrobia in multiple sclerosis and healthy patients. (Figure 9) The lack of diversity in this phylum both between and within multiple sclerosis patient sand healthy individuals indicates that it is likely not important to the development or treatment of multiple sclerosis. That said, the analysis I performed did not explain why its abundance appears to be so much lower in Interferon-treated multiple sclerosis patients than the other groups.
+The next phylum I looked at was Verrucomicrobia, because it was very abundant in every patient group except for the Interferon-treated multiple sclerosis patients. (Figure 2 A) Just like Cyanobacteria, there is sigificantly lower Shannon diversity in Verrucomicrobia in patients of every sample, which makse sense because it is also less common. (Figure 8) However, unlike Cyanobacteria, there does not appear to be a significant phylogenetic difference between Verrucomicrobia in multiple sclerosis and healthy patients. (Figure 9) The lack of diversity in this phylum both between and within multiple sclerosis patient sand healthy individuals indicates that it is likely not important to the development or treatment of multiple sclerosis. That said, the analysis I performed did not explain why its abundance appears to be so much lower in Interferon-treated multiple sclerosis patients than the other groups.
 
-The next phylum I looked at in-depth was Cyanobacteria, because patients in the Interferon-treated multiple sclerosis group appeared to have a greater abundance of this phylum than the other groups. (Figure 2 A) I determined that this increase in abundance was not due to one outlying individual by looking at the standard deviations within this group, which was not considerably greater than the standard deviations of any other equally abundant phylums. (Figure 2 B) Interestingly, all of the Cyanobacteria appeared to be from the same class, Chloroplast. (Table 4) As one might expect from this information, the alpha diversity within this phylum was subsequently low among all individuals, including Interferon-treated multiple sclerosis patients. (Figure 6) That said, there is one outlier individual in the Interferon group with significantly higher alpha diversity.
+The last phylum I looked at in-depth was Cyanobacteria, because patients in the Interferon-treated multiple sclerosis group appeared to have a greater abundance of this phylum than the other groups. (Figure 2 A) I determined that this increase in abundance was not due to one outlying individual by looking at the standard deviations within this group, which was not considerably greater than the standard deviations of any other equally abundant phylums. (Figure 2 B) Interestingly, all of the Cyanobacteria appeared to be from the same class, Chloroplast. (Table 4) As one might expect from this information, the alpha diversity within this phylum was subsequently low among all individuals, including Interferon-treated multiple sclerosis patients. (Figure 6) That said, there is one outlier individual in the Interferon group with significantly higher alpha diversity.
 However, the area of analysis that shows the greatest difference between the Cyanobacteria in healthy and multiple sclerosis patients was the phylogenetic tree. This tree showed two main clades, one that pimarily contained Cyanobactaria from healthy patients and another that contained Cyanobacteria exclusively from multiple sclerosis patients. (Figure 7) This indicates that while there is little diversity in Cyanobacteria within patient groups, the Cyanobacteria found in multiple sclerosis patients appears to be genetically different than that in healthy patients. This indicates that there is a difference in the Cyanobacteria contents of gut microbiomes between multiple sclerosis and healthy patients, and possibly a connection between this phylum and the development or treatment of multiple sclerosis.
-One study links multiple sclerosis to a phage that is known to infect certain species of cyanobacteria [@carter2012epstein]
+One study links multiple sclerosis to a phage that is known to infect certain species of cyanobacteria. [@carter2012epstein] Given this information, I think it would be interesting to perform a more in-deptht study on the Cyanobacteria in these patients' gut microbiomes, possibly looking for viral genetic markers or other, more Cyanobacteria-specific amplicons. 
 
 
 # Sources Cited
