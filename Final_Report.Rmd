@@ -67,7 +67,7 @@ melted_obj <- psmelt(phyloseq_obj)
 ##Ovelall Community Analysis
 
 ```{r overall-diversity}
-# this subset removes mouse data from the dataset
+# this finds Shannon diversity in all patients
 plot_richness(phyloseq_obj,
               x = "host_phenotype_s",
               measures = c("Shannon")) +
@@ -85,7 +85,7 @@ This figure shows Shannon diversity in healthy control patients and multiple scl
 
 This table shows the abundance of each phylum in healthy patients and multiple sclerosis patients of each treatment type.
 ```{r phylum-by-phenotype}
-# this code plots the abundance of each phylum present in each sex's hands
+# this code gets the abundance of each phylum present in each patient type
 phylum_totals <- melted_obj %>%
   filter(!is.na(Phylum)) %>%
   group_by(Phylum, host_phenotype_s) %>%
@@ -101,7 +101,7 @@ kable(phylum_totals)
 
 This table shows the number of patients in each treatment group. Each multiple sclerosis group is smaller on its own than the control group, and the different treatment groups are smaller than the untreated group.
 ```{r patient-numbers}
-
+# this code tells the number of patients with each disease type
 melted_obj %>%
   group_by(host_phenotype_s) %>%
   summarise(number_of_patients = n_distinct(isolate_s))
@@ -119,10 +119,9 @@ melted_obj %>%
              fill = Phylum)) +
     geom_col(position = "fill",
              color = "black") +
-  #scale_x_discrete(labels = c("a", "b", "c", "d")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggtitle("A")
-
+  ggtitle("A. Phylum abundance in MS vs healthy patients")
+# this performs a similar analysis, but with standard deviation
 melted_obj %>%
   filter(!is.na(Phylum)) %>%
   group_by(host_phenotype_s, Phylum) %>%
@@ -134,7 +133,8 @@ melted_obj %>%
              color = "black") +
   #scale_x_discrete(labels = c("a", "b", "c", "d")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggtitle("B")
+  ggtitle("B. Phylum abundance standard deviation
+          in MS vs healthy patients")
 ```
 
 **Figure 2.** Normalized abundances of each phylum
@@ -143,12 +143,12 @@ This figure shows the normalized abundances of each phylum in each treatment gro
 
 ```{r phylogeny}
 # this code displays the phylogenetic tree from
-# the GEGEious analysis
+# the GENEious analysis
 plot_tree(phyloseq_obj,
           color = "host_phenotype_s",
           ladderize = TRUE) +
 # the last line arranges the tree branches from short to long
-  ggtitle("A. Phylogenetic tree colored by host ID")
+  ggtitle("Phylogenetic tree colored by host disease type")
 # you can use prune_taxa to look at trees for certain taxa
 ```
 
@@ -162,6 +162,8 @@ This figure shows a phylogenetic tree of all sequences in the dataset, with tips
 
 This table shows the abundances of each class within the Firmicutes phylum for multiple sclerosis patient sof all disease statuses.
 ```{r fir-common-classes}
+# this subsets the bacteria in the Firmicutes phylum
+# and finds the subsequent classes
 firm_classes <- melted_obj %>%
   filter(Phylum == "Firmicutes") %>%
   filter(!is.na(Class)) %>%
@@ -171,13 +173,14 @@ firm_classes <- melted_obj %>%
          value = n) %>%
   arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
           desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+# this prints the table in a markdown-friendly format
 kable(firm_classes)
 ```
 
 ```{r fir-diversity}
-
+# This subsets the data to only include Firmicutes phylum
 fir_subset <- subset_taxa(phyloseq_obj, Phylum == "Firmicutes")
-# this subset removes mouse data from the dataset
+# This finds the shannon diversity within this subset
 plot_richness(fir_subset,
               x = "host_phenotype_s",
               measures = c("Shannon")) +
@@ -192,10 +195,9 @@ plot_richness(fir_subset,
 This figure shows the Shannon diversity in all bacteria within the Firmicutes phylum for patients of all disease statuses.
 
 ```{r phylogeny_fir}
-
+# this makes a phylogenetic tree of the Firmicutes subset
 plot_tree(fir_subset,
      color = "host_phenotype_s")
-
 ```
 
 **Figure 5.** Phylogenetic tree of Firmicutes bacteria
@@ -208,6 +210,8 @@ This figure shows a phylogenetic tree of all sequences in the Firmicutes phylum,
 
 This table shows that the only class in the Cyanobacteria phylum for multiple sclerosis patients of all disease statuses is Chloroplast.
 ```{r cy-common-classes}
+# this subsets the bacteria in the Cyanobacteria phylum
+# and identifies the sunsequent classes
 cy_class <- melted_obj %>%
   filter(Phylum == "Cyanobacteria/Chloroplast") %>%
   group_by(host_phenotype_s, Class) %>%
@@ -216,14 +220,14 @@ cy_class <- melted_obj %>%
          value = n) %>%
   arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
           desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+# this prints the above table in a markdown-friendly format
 kable(cy_class)
-
 ```
 
 ```{r cy-diversity}
-
+# This subsets the bacteria in the Cyanobacteria phylum
 cy_subset <- subset_taxa(phyloseq_obj, Phylum == "Cyanobacteria/Chloroplast")
-# this subset removes mouse data from the dataset
+# this plots the shannon diversity in said subset
 plot_richness(cy_subset,
               x = "host_phenotype_s",
               measures = c("Shannon")) +
@@ -238,10 +242,9 @@ plot_richness(cy_subset,
 This figure shows the Shannon diversity in all bacteria within the Cyanobacteria phylum for patients of all disease statuses.
 
 ```{r phylogeny_cy}
-
+# This makes a phylogenetic tree of Cyanobacteria
 plot_tree(cy_subset,
      color = "host_phenotype_s")
-
 ```
 
 **Figure 7.** Phylogenetic tree of Cyanobacteria
@@ -254,6 +257,8 @@ This figure shows a phylogenetic tree of all sequences in the Cyanobacteria phyl
 
 This table shows that all bacteria in the Verrucomicrobia phylum belong to the same class, order, family, and genus for multiple sclerosis patients of all disease statuses.
 ```{r ver-common-classes}
+# this subsets the bacteria in the Verrucomicrobia phylum
+# and identifies the sunsequent classes
 ver_classes <- melted_obj %>%
   filter(Phylum == "Verrucomicrobia") %>%
   group_by(host_phenotype_s, Class, Order, Family, Genus) %>%
@@ -262,14 +267,14 @@ ver_classes <- melted_obj %>%
          value = n) %>%
   arrange(desc(Healthy_Control), desc(Multiple_Sclerosis_Interferon),
           desc(Multiple_Sclerosis_Copaxone), desc(Multiple_Sclerosis_Untreated))
+# this puts the above information in a markdown-friendly format
 kable(ver_classes)
-
 ```
 
 ```{r ver-diversity}
-
+# This subsets the bacteria in the Verrucomicrobia phylum
 ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
-# this subset removes mouse data from the dataset
+# this plots the shannon diversity of said subset
 plot_richness(ver_subset,
               x = "host_phenotype_s",
               measures = c("Shannon")) +
@@ -284,7 +289,7 @@ plot_richness(ver_subset,
 This figure shows the Shannon diversity in all bacteria within the Verrucomicrobia phylum for patients of all disease statuses.
 
 ```{r phylogeny_ver}
-
+# this makes a phylogenetic tree of bacteria in Verrucomicrobia
 plot_tree(ver_subset,
      color = "host_phenotype_s")
 ```
