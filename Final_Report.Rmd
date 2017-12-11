@@ -1,7 +1,7 @@
 ---
 title: "Final Report: The Human Gut Microbiome in Multiple Sclerosis Patients Recieving Various Treatments"
 author: "Emma Gibson"
-date: "December 15, 2017"
+date: "December 14, 2017"
 output:
     github_document: default
     word_document: default
@@ -11,14 +11,17 @@ csl: bioinformatics.csl
 
 # Introduction
 
-*Background.* In recent years, the human microbiome and its role and function in human health has become a popular topic of study and research. Unlike the harmful pathogens that many associate bacteria with, these microbes live symbiotically on and within our body. For instance,, studies haveshown that they play acritical role in digestion for numerous eukaryotic organisms, from humans to abalone. [@ley2008evolution; @erasmus1997role]
+*Background.* In recent years, the human microbiome and its role and function in human health has become a popular topic of study and research. Unlike the harmful pathogens that many associate bacteria with, these microbes live symbiotically on and within our body. For instance, studies have shown that they play acritical role in digestion for numerous eukaryotic organisms, from humans to abalone. [@ley2008evolution; @erasmus1997role] Although these microbial communities can have vast and numerous affects on their hosts, it was incredibly difficult to study them until recent breakthroughs in DNA sequencing due to their microscopic size and incredible abunndance. Now that we have the means to study them, scientists are discovering that their affects on host physiology are profound.
 
-Although the microbes inside our gut are primarily beneficial in nature, these communities have also been linked to countless ailments and diseases, including many autoimmune disorders. [@clemente2012impact] Although their purpose is complex and still not entirely understood, these gut microbes are known to play a role in training the immune system to recognize and attack potential pathogens both within the gut and throughout the rest of the body. [@mcdermott2014microbiome; @lee2010has] Therefore, there is plentiful research being conducted on the role that these microbial communities can play immune system-related disorder both inside the digestive tract and in the body as a whole. A state of *dysbiosis*, or an abnormal gut microbiome, has already been correlated with numerous disorders, including diabetes, irritable bowel disorder, and rheumatoid arthritis. [@kostic2014microbiome; @alkanani2015alterations; @scher2013expansion] In this analalysis, I chose to focus on the link between the gut microbiome and multiple sclerosis, another autoimmune disorder that has been linked to dysbiosis. [@cantarel2015gut; @chen2016multiple] 
+Although the microbes inside our gut are primarily beneficial in nature, these communities have also been linked to countless ailments and diseases, including many autoimmune disorders. [@clemente2012impact] While their purpose is complex and still not entirely understood, these gut microbes are known to play a role in training the immune system to recognize and attack potential pathogens both within the gut and throughout the rest of the body. [@mcdermott2014microbiome; @lee2010has] Therefore, there is plentiful research being conducted on the role that these microbial communities can play immune system-related disorder both inside the digestive tract and in the body as a whole.
 
-Multiple sclerosis is an autoimmune disease that is defined by the boody's T-cells attackin the myelin coating of nerve cells, causing nerve damage. [@miranda2013role] Some studies have linked its development to environmental factors, such as sunlight exposure and diet. [@riccio2010may] There have also beenn numerous possible genetic markers found throughout the human genome. [@oksenberg2008genetics] Although multiple sclerosis is likely the result of numerous interacting environmental and genetic factors, the gut microbiome can act as an interface for all of these factors, leading to the development of the disease. [@ochoa2014gut; @WANG20141] In evaluating the role that the gut microbiome plays in the development and treatment of diseases such as multiple sclerosis, it is important to note that correlation does not necesarily equal causation. However, a recent study by Berer *et al.* has demonstrated that gut microbes from multiple sclerosis patients can induce multiple sclerosis-like symptoms in transgenic mouse models. [@berer2017gut] This indicates that the gut microbiome is not simply an indicator of multiple sclerosis, but plays a role it the development of the disorder as well. 
+The disorders that are linked tot he microbiome are throught to not be caused by some kind of pathanogenisis, but instead by *dysbiosis*. A state of *dysbiosis*, or an abnormal gut microbiome, has already been correlated with numerous disorders, including diabetes, irritable bowel disorder, and rheumatoid arthritis. [@kostic2014microbiome; @alkanani2015alterations; @scher2013expansion] In this analalysis, I chose to focus on the link between the gut microbiome and multiple sclerosis, another autoimmune disorder that has been linked to dysbiosis. [@cantarel2015gut; @chen2016multiple] 
 
+*Study system.* Multiple sclerosis is an autoimmune disease characterized by the immune system's T-cells attacking the myelin coating of nerve cells, causing nerve damage. [@miranda2013role] Symptoms can include pain, motor control issues, sensory issues, and mood issues. Currently, it is unclear what casues the disorder, and studies have found numerous possible causes and risk factors. Some studies have linked its development to environmental factors, such as sunlight exposure and diet. [@riccio2010may] There have also been several possible genetic markers found throughout the human genome. [@oksenberg2008genetics] Although multiple sclerosis is likely the result of numerous interacting environmental and genetic factors, the gut microbiome can act as an interface for all of these factors, leading to the development of the disease. [@ochoa2014gut; @WANG20141]
 
-In this analysis, I aim to discover the primary differences between gut microbiomes of multiple sclerosis patients and healthy patients, as well as the differences between different multiple sclerosis treatments.
+Like the previously mentioned autoimmune disorders, multiple sclerosis has also been correlated aith a state of *dysbiosis*. [@miyake2015dysbiosis] In evaluating the role that the gut microbiome plays in the development and treatment of diseases such as multiple sclerosis, it is important to note that correlation does not necesarily equal causation. However, a recent study by Berer *et al.* has demonstrated that gut microbes from multiple sclerosis patients can induce multiple sclerosis-like symptoms in transgenic mouse models. [@berer2017gut] This indicates that the gut microbiome is not simply an indicator of multiple sclerosis, but plays a role it the development of the disorder as well.
+
+*objectives of this study.* In this analysis, I aim to discover the primary differences between gut microbiomes of multiple sclerosis patients and healthy patients, as well as the differences between different multiple sclerosis treatments. One aspect of this analysis will involve low-resolution analysis of the microbiome community as a whole. I looked at the relative abundances of various bacterial phylums among the different patients, looking for differenes in the ratios of one bacterial clade to the other. I also conducted more detailed analysis at several bacterial phylums too see if there are notable trends at the species, genus, or other higher-resolution levels. The main purppose of this study was to discover what trends there are among multiple sclerosis patient and healthy control microbiomes, in both general and detailed terms.
 
 # Methods
 
@@ -38,7 +41,7 @@ DADA2 was used for inter-sequence analysis and cleaning, such as forming OTUs an
 
 # Results
 
-```{r load-libraries, echo=FALSE}
+```{r load-libraries, echo=FALSE, message=FALSE}
 # load all necesary libraries
 library("dplyr")
 library("tidyr")
@@ -68,7 +71,7 @@ melted_obj <- psmelt(phyloseq_obj)
 
 ##Ovelall Community Analysis
 
-```{r overall-diversity, echo=FALSE}
+```{r overall-diversity, echo=FALSE. message=FALSE}
 # this finds Shannon diversity in all patients
 plot_richness(phyloseq_obj,
               x = "host_phenotype_s",
@@ -111,7 +114,8 @@ This table shows the number of patients in each treatment group. Each multiple s
 # this code tells the number of patients with each disease type
 melted_obj %>%
   group_by(host_phenotype_s) %>%
-  summarise(number_of_patients = n_distinct(isolate_s))
+  summarise(number_of_patients = n_distinct(isolate_s)) %>%
+  kable()
 ```
 
 ```{r phylum_graph, echo=FALSE}
@@ -149,7 +153,7 @@ melted_obj %>%
                               "MS (Copaxone)",
                               "MS (Interferon)",
                               "MS (Untreated")) +
-  theme(axis.text.x = element_text(angle = 75, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 50, hjust = 1)) +
   ggtitle("(B) Phylum abundance standard deviation
           in MS vs healthy patients")
 ```
@@ -194,7 +198,7 @@ firm_classes <- melted_obj %>%
 kable(firm_classes)
 ```
 
-```{r fir-diversity}
+```{r fir-diversity, echo=FALSE, message=FALSE}
 # This subsets the data to only include Firmicutes phylum
 fir_subset <- subset_taxa(phyloseq_obj, Phylum == "Firmicutes")
 # This finds the shannon diversity within this subset
@@ -247,7 +251,7 @@ cy_class <- melted_obj %>%
 kable(cy_class)
 ```
 
-```{r cy-diversity, echo=FALSE}
+```{r cy-diversity, echo=FALSE, message=FALSE}
 # This subsets the bacteria in the Cyanobacteria phylum
 cy_subset <- subset_taxa(phyloseq_obj, Phylum == "Cyanobacteria/Chloroplast")
 # this plots the shannon diversity in said subset
@@ -284,7 +288,7 @@ This figure shows a phylogenetic tree of all sequences in the Cyanobacteria phyl
 
 **Table 5.** Common class, order, family, and genus in Verrucomicrobia bacteria
 
-This table shows that all bacteria in the Verrucomicrobia phylum belong to the same class, order, family, and genus for multiple sclerosis patients of all disease statuses.
+This table shows that all bacteria in the Verrucomicrobia phylum belong to the same class, order, family, and genus for multiple sclerosis patients of all disease statuses, except for species whose class could not be identified.
 ```{r ver-common-classes, echo=FALSE}
 # this subsets the bacteria in the Verrucomicrobia phylum
 # and identifies the sunsequent classes
@@ -300,7 +304,7 @@ ver_classes <- melted_obj %>%
 kable(ver_classes)
 ```
 
-```{r ver-diversity, echo=FALSE}
+```{r ver-diversity, echo=FALSE, message=FALSE}
 # This subsets the bacteria in the Verrucomicrobia phylum
 ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
 # this plots the shannon diversity of said subset
