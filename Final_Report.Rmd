@@ -71,9 +71,9 @@ metadata_in <- read.table(paste0("data/metadata/",
 melted_obj <- psmelt(phyloseq_obj)
 ```
 
-##Ovelall Community Analysis
+##Overall Community Analysis
 
-```{r overall-diversity, echo=FALSE, message=FALSE}
+```{r overall-diversity, echo=FALSE, message=FALSE, warning=FALSE}
 # this finds Shannon diversity in all patients
 plot_richness(phyloseq_obj,
               x = "host_phenotype_s",
@@ -203,7 +203,7 @@ firm_classes <- melted_obj %>%
 kable(firm_classes)
 ```
 
-```{r fir-diversity, echo=FALSE, message=FALSE}
+```{r fir-diversity, echo=FALSE, message=FALSE, warning=FALSE}
 # This subsets the data to only include Firmicutes phylum
 fir_subset <- subset_taxa(phyloseq_obj, Phylum == "Firmicutes")
 # This finds the shannon diversity within this subset
@@ -285,7 +285,7 @@ cy_class <- melted_obj %>%
 kable(cy_class)
 ```
 
-```{r cy-diversity, echo=FALSE, message=FALSE}
+```{r cy-diversity, echo=FALSE, message=FALSE, warning=FALSE}
 # This subsets the bacteria in the Cyanobacteria phylum
 cy_subset <- subset_taxa(phyloseq_obj, Phylum == "Cyanobacteria/Chloroplast")
 # this plots the shannon diversity in said subset
@@ -341,7 +341,7 @@ ver_classes <- melted_obj %>%
 kable(ver_classes)
 ```
 
-```{r ver-diversity, echo=FALSE, message=FALSE}
+```{r ver-diversity, echo=FALSE, message=FALSE, warning=FALSE}
 # This subsets the bacteria in the Verrucomicrobia phylum
 ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
 # this plots the shannon diversity of said subset

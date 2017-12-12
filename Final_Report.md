@@ -43,15 +43,8 @@ Sequences of sufficient quality were then analyzed in R, using all of the releva
 Results
 =======
 
-Ovelall Community Analysis
+Overall Community Analysis
 --------------------------
-
-    ## Warning in estimate_richness(physeq, split = TRUE, measures = measures): The data you have provided does not have
-    ## any singletons. This is highly suspicious. Results of richness
-    ## estimates (for example) are probably unreliable, or wrong, if you have already
-    ## trimmed low-abundance taxa from the data.
-    ## 
-    ## We recommended that you find the un-trimmed data and retry.
 
 ![](Final_Report_files/figure-markdown_github-ascii_identifiers/overall-diversity-1.png)
 
@@ -116,13 +109,6 @@ This table shows the abundances of each class and order within the Firmicutes ph
 | Clostridia       | NA                 |               748|                            238|                              306|                             493|
 | Bacilli          | Bacillales         |               352|                            112|                              144|                             232|
 
-    ## Warning in estimate_richness(physeq, split = TRUE, measures = measures): The data you have provided does not have
-    ## any singletons. This is highly suspicious. Results of richness
-    ## estimates (for example) are probably unreliable, or wrong, if you have already
-    ## trimmed low-abundance taxa from the data.
-    ## 
-    ## We recommended that you find the un-trimmed data and retry.
-
 ![](Final_Report_files/figure-markdown_github-ascii_identifiers/fir-diversity-1.png)
 
 **Figure 4.** Shannon diversity in Firmicutes bacteria
@@ -152,13 +138,6 @@ This table shows the class of Cyanobacteria samples for multiple sclerosis patie
 |:------------|-----------------:|------------------------------:|--------------------------------:|-------------------------------:|
 | Chloroplast |               440|                            140|                              180|                             290|
 
-    ## Warning in estimate_richness(physeq, split = TRUE, measures = measures): The data you have provided does not have
-    ## any singletons. This is highly suspicious. Results of richness
-    ## estimates (for example) are probably unreliable, or wrong, if you have already
-    ## trimmed low-abundance taxa from the data.
-    ## 
-    ## We recommended that you find the un-trimmed data and retry.
-
 ![](Final_Report_files/figure-markdown_github-ascii_identifiers/cy-diversity-1.png)
 
 **Figure 6.** Shannon diversity in Cyanobacteria
@@ -181,13 +160,6 @@ This table shows the class, order, family, and genus among Verrucomicrobia sampl
 | Class            | Order              | Family              | Genus       |  Healthy\_Control|  Multiple\_Sclerosis\_Copaxone|  Multiple\_Sclerosis\_Interferon|  Multiple\_Sclerosis\_Untreated|
 |:-----------------|:-------------------|:--------------------|:------------|-----------------:|------------------------------:|--------------------------------:|-------------------------------:|
 | Verrucomicrobiae | Verrucomicrobiales | Verrucomicrobiaceae | Akkermansia |               836|                            266|                              342|                             551|
-
-    ## Warning in estimate_richness(physeq, split = TRUE, measures = measures): The data you have provided does not have
-    ## any singletons. This is highly suspicious. Results of richness
-    ## estimates (for example) are probably unreliable, or wrong, if you have already
-    ## trimmed low-abundance taxa from the data.
-    ## 
-    ## We recommended that you find the un-trimmed data and retry.
 
 ![](Final_Report_files/figure-markdown_github-ascii_identifiers/ver-diversity-1.png)
 
