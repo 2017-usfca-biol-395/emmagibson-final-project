@@ -73,7 +73,7 @@ melted_obj <- psmelt(phyloseq_obj)
 
 ##Ovelall Community Analysis
 
-```{r overall-diversity, echo=FALSE. message=FALSE}
+```{r overall-diversity, echo=FALSE, message=FALSE}
 # this finds Shannon diversity in all patients
 plot_richness(phyloseq_obj,
               x = "host_phenotype_s",
