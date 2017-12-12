@@ -73,7 +73,7 @@ melted_obj <- psmelt(phyloseq_obj)
 
 ##Overall Community Analysis
 
-```{r overall-diversity, echo=FALSE, message=FALSE, warning=FALSE}
+```{r overall-diversity, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7}
 # this finds Shannon diversity in all patients
 plot_richness(phyloseq_obj,
               x = "host_phenotype_s",
@@ -122,7 +122,7 @@ melted_obj %>%
   kable()
 ```
 
-```{r phylum_graph, echo=FALSE}
+```{r phylum_graph, echo=FALSE, fig.width=7}
 # this makes a stacked bar plot with phylum relative abundances
 # for each type of patient
 melted_obj %>%
@@ -166,7 +166,7 @@ melted_obj %>%
 
 This figure shows the normalized abundances of each phylum in each treatment group, and their respective standard deviations. (A) shows the normalized abundances of each phylum because the overall sum data is heavily skewed due to diverse sample sized for each test group, which are detailed in Table 2. Although there are several groups of bacteria that retain consistent relative abundance across all patient types, the Interferon-treated multiple sclerosis shows some major differences. Most notably, it contains considerably more Cyanobacteria and less Verrucomicrobia than the other patient groups. (B) shows the normalized standard deviations of each phylum, which remain fairly consistent across patient types. However, once again the Interferon group shows an increased standard deviation among Cyanobacteria and a decreased standard deviation among Verrucomicrobia.
 
-```{r phylogeny, echo=FALSE}
+```{r phylogeny, echo=FALSE, fig.width=7}
 # this code displays the phylogenetic tree from
 # the GENEious analysis
 plot_tree(phyloseq_obj,
@@ -203,7 +203,7 @@ firm_classes <- melted_obj %>%
 kable(firm_classes)
 ```
 
-```{r fir-diversity, echo=FALSE, message=FALSE, warning=FALSE}
+```{r fir-diversity, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7}
 # This subsets the data to only include Firmicutes phylum
 fir_subset <- subset_taxa(phyloseq_obj, Phylum == "Firmicutes")
 # This finds the shannon diversity within this subset
@@ -225,7 +225,7 @@ plot_richness(fir_subset,
 
 This figure shows the Shannon diversity in all bacteria within the Firmicutes phylum for patients of all disease statuses. The diversity patterns within this phylum more or less reflect the diversity of the overall data. That said, there appears to be a slightly higher amount of variability within the diversity for each patient type within this phylum than in the overall community data.
 
-```{r phylogeny_fir, echo=FALSE}
+```{r phylogeny_fir, echo=FALSE, fig.width=7}
 # this makes a phylogenetic tree of the Firmicutes subset
 plot_tree(fir_subset,
      color = "host_phenotype_s") +
@@ -285,7 +285,7 @@ cy_class <- melted_obj %>%
 kable(cy_class)
 ```
 
-```{r cy-diversity, echo=FALSE, message=FALSE, warning=FALSE}
+```{r cy-diversity, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7}
 # This subsets the bacteria in the Cyanobacteria phylum
 cy_subset <- subset_taxa(phyloseq_obj, Phylum == "Cyanobacteria/Chloroplast")
 # this plots the shannon diversity in said subset
@@ -307,7 +307,7 @@ plot_richness(cy_subset,
 
 This figure shows the Shannon diversity in all bacteria within the Cyanobacteria phylum for patients of all disease statuses. There is almost no diversity in any of the samples, which is reflected in Table 4, that shows there is only one class within this phylum. There is one outlier, which is within the patients being treated with Interferon. This is the same disease status group that showed an increase in Cyanobacteria (Figure 2)
 
-```{r phylogeny_cy, echo=FALSE}
+```{r phylogeny_cy, echo=FALSE, fig.width=7}
 # This makes a phylogenetic tree of Cyanobacteria
 plot_tree(cy_subset,
      color = "host_phenotype_s") +
@@ -341,7 +341,7 @@ ver_classes <- melted_obj %>%
 kable(ver_classes)
 ```
 
-```{r ver-diversity, echo=FALSE, message=FALSE, warning=FALSE}
+```{r ver-diversity, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7}
 # This subsets the bacteria in the Verrucomicrobia phylum
 ver_subset <- subset_taxa(phyloseq_obj, Phylum == "Verrucomicrobia")
 # this plots the shannon diversity of said subset
@@ -363,7 +363,7 @@ plot_richness(ver_subset,
 
 This figure shows the Shannon diversity in all bacteria within the Verrucomicrobia phylum for patients of all disease statuses. There is almost no diversity in any of the samples, which is reflected in Table 5, that shows all of the bacteria in this phylum belongs to the same class, order, family, and genus.
 
-```{r phylogeny_ver, echo=FALSE}
+```{r phylogeny_ver, echo=FALSE, fig.width=7}
 # this makes a phylogenetic tree of bacteria in Verrucomicrobia
 plot_tree(ver_subset,
      color = "host_phenotype_s") +
