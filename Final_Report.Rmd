@@ -3,8 +3,8 @@ title: "Final Report: The Human Gut Microbiome in Multiple Sclerosis Patients Re
 author: "Emma Gibson"
 date: "December 14, 2017"
 output:
-    word_document: default
     github_document: default
+    word_document: default
 bibliography: references.bib
 csl: bioinformatics.csl
 ---
@@ -243,7 +243,7 @@ plot_tree(fir_subset,
 
 While there are several prominent clades within Firmicutes, there are no clear patterns where one clade contains predominantly patients of a certain treatment or disease status (Figure 5). As with the overall community analysis, this phylum appears to contain too many diverse sequences to construct a detailed phylogenetic tree.
 
-```{r fir_order_abindance, echo=FALSE, fig.height=7}
+```{r fir_order_abindance, echo=FALSE, fig.width=7, fig.height=7}
 # this makes a stacked bar plot with relative abundances
 # of each order in Firmicutes for each type of patient
 # first, I made a subset with all Firmicutes bacteria
