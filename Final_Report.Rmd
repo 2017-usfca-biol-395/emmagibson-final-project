@@ -114,7 +114,7 @@ kable(phylum_totals)
 
 **Table 2.** Number of patients of each treatment type.
 
-Each multiple sclerosis group is smaller on its own than the control group, and the different treatment multiple sclerosis groups are smaller than the untreated multiple sclerosis group (Table 2). The differences in sample sizes roughly correlate with the total abundances of each phylum (Table 1). For instance, the ratio of total abundance of Tenericutes among different patient groups is almost identical to the ratio of patient numbers in each group. These discrepancies in sample sized make it necessary to normalize data when taking measurements like sum abundance into account.
+Each multiple sclerosis group is smaller on its own than the control group, and the different treatment multiple sclerosis groups are smaller than the untreated multiple sclerosis group (Table 2). The differences in sample sizes roughly correlate with the total abundances of each phylum (Table 1). For instance, the ratio of total abundance of Tenericutes among different patient groups is almost identical to the ratio of patient numbers in each group. These discrepancies in sample sized make it necessary to normalize data when taking measurements like sum abundance into account. 
 
 ```{r patient-numbers, echo=FALSE}
 # this code tells the number of patients with each disease type
