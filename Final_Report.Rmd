@@ -3,8 +3,8 @@ title: "Final Report: The Human Gut Microbiome in Multiple Sclerosis Patients Re
 author: "Emma Gibson"
 date: "December 14, 2017"
 output:
-    word_document: default
     github_document: default
+    word_document: default
 bibliography: references.bib
 csl: bioinformatics.csl
 ---
