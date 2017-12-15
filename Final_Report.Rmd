@@ -152,7 +152,7 @@ melted_obj %>%
             mean_abund = mean(Abundance)) %>%
   ggplot(aes(x = host_phenotype_s,
              color = Phylum)) +
-    geom_errorbar(aes(ymin = ifelse( (mean_abund - sd_abund) > 0,
+    geom_errorbar(aes(ymin = ifelse((mean_abund - sd_abund) > 0,
                                     mean_abund - sd_abund,
                                     0),
                       ymax = mean_abund + sd_abund),
